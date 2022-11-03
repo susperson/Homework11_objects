@@ -1,5 +1,7 @@
 package hw11_1_objects;
 
+import java.util.Objects;
+
 public class Book {
     private final String name;
     private final Author author;
@@ -27,12 +29,21 @@ public class Book {
         this.publishingYear = publishingYear;
     }
 
-    public void printBookInfo() {
-        System.out.println("************");
-        System.out.println("Книга: " + this.getName());
-        System.out.print("Автор: ");
-        this.getAuthor().printAuthor();
-        System.out.println("Год издания: " + this.getPublishingYear());
+    @Override
+    public String toString() {
+        return "Книга: " + name + ". " + author + ", год публикации: " + publishingYear;
     }
 
+    @Override
+    public boolean equals(Object otherBook) {
+        if (this == otherBook) return true;
+        if (otherBook == null || getClass() != otherBook.getClass()) return false;
+        Book book = (Book) otherBook;
+        return Objects.equals(name, book.name) && Objects.equals(author, book.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, author);
+    }
 }
